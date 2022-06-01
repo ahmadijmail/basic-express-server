@@ -1,0 +1,24 @@
+'use strict';
+const server = require('../src/server');
+const supertest = require('supertest');
+const request = supertest(server.app);
+describe('API Server', () => {
+    test('getting data from home route / >>>  home route is working', async () => {
+        const response = await request.get('/');
+        expect(response.status).toEqual(200);
+        expect(response.text).toEqual('Hello User');
+    });
+    test('getting data from /data route', async () => {
+        const response = await request.get('/data');
+        expect(response.status).toEqual(200);
+        expect(typeof response.body).toEqual('object');
+
+    });
+    it('handle not found request', async () => {
+        const response = await request.get('/abc');
+        expect(response.status).toEqual(404);
+       
+
+    });
+   
+})
